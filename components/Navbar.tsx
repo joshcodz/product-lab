@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Moon, Sun, Menu, X, FileText } from "lucide-react";
 import { useTheme } from "./ThemeProvider";
+import ThemeSettingsPopover from "./ThemeSettingsPopover";
 
 const NAV_LINKS = [
   { label: "Work", href: "#work" },
@@ -112,6 +113,9 @@ export default function Navbar() {
 
               {/* Right side */}
               <div className="flex items-center gap-2">
+                {/* Wallpaper & Theme picker */}
+                <ThemeSettingsPopover align="right" />
+
                 {/* Dark mode toggle */}
                 <button
                   onClick={toggleTheme}
@@ -197,6 +201,7 @@ export default function Navbar() {
                 }}
                 className="mt-4 flex items-center gap-4"
               >
+                <ThemeSettingsPopover align="left" />
                 <button
                   onClick={toggleTheme}
                   className="p-3 rounded-xl bg-bg-secondary text-text-primary"

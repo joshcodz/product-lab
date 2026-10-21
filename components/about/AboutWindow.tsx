@@ -80,7 +80,7 @@ Aiming for Associate Product Manager or Founder's Office roles at ambitious B2B 
                   <span className="text-text-tertiary font-normal">→ The Origin</span>
                 </div>
                 <p className="text-text-secondary">
-                  Started as a Computer Science undergrad at SRMIST writing C++ and building full-stack web apps.
+                  Started as a Computer Science undergrad at SRMIST writing Java and building full-stack web apps.
                   Quickly realized my real thrill wasn&apos;t just writing clean syntax — it was figuring out{" "}
                   <span className="text-text-primary font-semibold">what to build in the first place</span> and why
                   anyone would care.
@@ -99,10 +99,10 @@ Aiming for Associate Product Manager or Founder's Office roles at ambitious B2B 
                   <span className="text-text-tertiary font-normal">→ Building &amp; Leading</span>
                 </div>
                 <p className="text-text-secondary">
-                  Product Manager Intern at <span className="text-text-primary font-semibold">AlienHouse Networks</span>,
-                  driving user journeys and spec writing with an engineering team of 8. In parallel, leading tech &amp;
-                  community at <span className="text-text-primary font-semibold">Founders Club SRMIST</span>, helping
-                  builders turn hackathon ideas into functional products.
+                  Ex-Product Manager Intern at <span className="text-text-primary font-semibold">AlienHouse Networks</span>,
+                  driving internal product systems for client management, service delivery, and cross-functional workflows.
+                  In parallel, serving as an Quality and Operations Lead at <span className="text-text-primary font-semibold">Founders Club SRMIST</span>,
+                  creating entreprenuerial community throuoghout the campus, helping in managing 7-8 incubated startups in terms of product, value proposition, marketing, operations and investing procedures.
                 </p>
               </motion.div>
 
@@ -118,7 +118,7 @@ Aiming for Associate Product Manager or Founder's Office roles at ambitious B2B 
                   <span className="text-text-tertiary font-normal">→ The Ambition</span>
                 </div>
                 <p className="text-text-secondary">
-                  Aiming for Associate Product Manager or Founder&apos;s Office roles at ambitious B2B SaaS and developer tools
+                  Aiming for Product Management roles at ambitious B2B SaaS, Healthcare, FinTech
                   startups. Either making developer workflows frictionless, or founding a venture that saves people 10 hours a week.
                   (Plus: consuming slightly too much filter coffee while debugging edge cases).
                 </p>

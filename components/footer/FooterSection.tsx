@@ -11,6 +11,7 @@ import {
   ArrowUpRight,
   Terminal,
   X,
+  StickyNote,
 } from "lucide-react";
 import { Linkedin, Github } from "@/components/icons/BrandIcons";
 
@@ -56,7 +57,7 @@ export default function FooterSection({ config = {} }: FooterSectionProps) {
 
         {/* Huge Display Name */}
         <h2 className="font-display text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-text-primary mb-4">
-          Josh<span className="text-accent">.</span>
+          Product Lab<span className="text-accent">.</span>
         </h2>
 
         <p className="text-text-secondary text-lg sm:text-2xl font-display max-w-xl mx-auto mb-10 leading-snug">
@@ -83,31 +84,8 @@ export default function FooterSection({ config = {} }: FooterSectionProps) {
           </a>
         </div>
 
-        {/* Social Icons & AI Prompts Row */}
+        {/* Social Icons & Resume Row */}
         <div className="flex flex-wrap items-center justify-center gap-3 max-w-2xl mx-auto mb-12">
-          <a
-            href={`https://claude.ai/new?q=${encodeURIComponent(
-              "Tell me about Josh, a PM-minded CS student at SRMIST. He's built products like Onboarding Friction Score and Zenos, interned at AlienHouse Networks as a PM, and leads Founders Club SRMIST. Why is he a standout PM candidate?"
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl glass border border-border-glass text-xs font-medium text-text-secondary hover:text-accent hover:border-accent/40 transition-all"
-          >
-            <Sparkles size={14} className="text-accent" />
-            <span>Ask Claude about me</span>
-          </a>
-
-          <a
-            href={`https://chatgpt.com/?q=${encodeURIComponent(
-              "Tell me about Josh, a PM-minded CS student at SRMIST. He's built products like Onboarding Friction Score and Zenos, interned at AlienHouse Networks, and leads Founders Club SRMIST. Why is he a standout PM candidate?"
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl glass border border-border-glass text-xs font-medium text-text-secondary hover:text-accent hover:border-accent/40 transition-all"
-          >
-            <MessageCircle size={14} className="text-accent" />
-            <span>Ask ChatGPT about me</span>
-          </a>
 
           <a
             href={linkedin}
@@ -136,6 +114,16 @@ export default function FooterSection({ config = {} }: FooterSectionProps) {
             <FileText size={14} />
             <span>Resume (PDF)</span>
           </a>
+
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new CustomEvent("open-guestbook"))}
+            className="flex items-center gap-1.5 px-4 py-2 rounded-xl glass border border-border-glass text-xs font-medium text-text-secondary hover:text-amber-400 hover:border-amber-400/40 transition-all active:scale-95 cursor-pointer"
+            aria-label="Leave a note in guestbook"
+          >
+            <StickyNote size={14} className="text-amber-400" />
+            <span>Leave a note</span>
+          </button>
         </div>
 
         {/* Text CTA Links */}

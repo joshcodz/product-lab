@@ -2,9 +2,14 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, ExternalLink } from "lucide-react";
-import CountUp from "./CountUp";
+import { ArrowRight } from "lucide-react";
 import { DiscoveryVisual, ExecutionVisual, TechnicalVisual, GrowthVisual } from "./PillarVisuals";
+
+export interface PillarIndicator {
+  label: string;
+  description: string;
+  tag?: string;
+}
 
 export interface PillarData {
   number: string;
@@ -13,13 +18,7 @@ export interface PillarData {
   description: string;
   caseStudySlug: string;
   caseStudyTitle: string;
-  stats: {
-    value: number;
-    prefix?: string;
-    suffix?: string;
-    label: string;
-    description: string;
-  }[];
+  indicators: PillarIndicator[];
   visual: React.ReactNode;
 }
 
@@ -29,25 +28,24 @@ const PILLARS: PillarData[] = [
     category: "Product Discovery & Strategy",
     claim: "I find the problem worth solving before writing a line of spec.",
     description:
-      "I run structured customer interviews and quantitative friction maps so teams never waste sprint cycles building features nobody uses.",
+      "I run structured problem-discovery sessions and friction mapping so teams never waste sprint cycles building features nobody asked for.",
     caseStudySlug: "onboarding-friction-score",
     caseStudyTitle: "Onboarding Friction Score",
-    stats: [
+    indicators: [
       {
-        value: 24,
-        suffix: "+",
-        label: "Interviews Run",
-        description: "1-on-1 user problem discovery sessions",
+        label: "Friction Mapping Framework",
+        description: "Built a structured scoring system to quantify onboarding pain points across SaaS products",
+        tag: "Method",
       },
       {
-        value: 6,
-        label: "Validated Problems",
-        description: "Prioritized into high-ROI solution specs",
+        label: "Problem Prioritization",
+        description: "Ranked discovery findings by user impact and feasibility to define what to build first",
+        tag: "Output",
       },
       {
-        value: 4,
-        label: "Bloated Features Cut",
-        description: "Saved ~120 engineer-hours of low-impact work",
+        label: "Scope Definition",
+        description: "Translated raw user friction into actionable P0/P1 feature specs with clear boundaries",
+        tag: "Output",
       },
     ],
     visual: <DiscoveryVisual />,
@@ -57,25 +55,24 @@ const PILLARS: PillarData[] = [
     category: "Execution & Specs",
     claim: "I write specs that engineers actually read — and ship on time.",
     description:
-      "Zero hand-wavy requirements. I provide precise acceptance criteria, API expectations, edge-case trees, and interactive prototypes.",
+      "Zero hand-wavy requirements. Precise acceptance criteria, API expectations, edge-case trees, and interactive prototypes.",
     caseStudySlug: "alienhouse-internship",
-    caseStudyTitle: "AlienHouse PM Internship",
-    stats: [
+    caseStudyTitle: "AlienHouse Networks Internship",
+    indicators: [
       {
-        value: 8,
-        label: "PRDs Authored",
-        description: "Engineers praised clarity and completeness",
+        label: "PM Intern @ AlienHouse Networks",
+        description: "Owned product specs and cross-functional coordination across Marketing, Hiring, and Tech squads",
+        tag: "Role",
       },
       {
-        value: 14,
-        label: "Features Shipped",
-        description: "From idea through testing to production",
+        label: "System-Driven Workflows",
+        description: "Designed structured processes with clear acceptance criteria for every deliverable",
+        tag: "Approach",
       },
       {
-        value: 2.5,
-        suffix: " wk",
-        label: "Cycle Time",
-        description: "Rapid iteration cadence across cross-functional team",
+        label: "Cross-Functional Coordination",
+        description: "Bridged communication between non-technical stakeholders and engineering teams",
+        tag: "Skill",
       },
     ],
     visual: <ExecutionVisual />,
@@ -85,26 +82,24 @@ const PILLARS: PillarData[] = [
     category: "Technical Fluency & Building",
     claim: "I don't just spec it — I build it.",
     description:
-      "As a CSE student and full-stack engineer, I prototype complex interactions in 48 hours, speak git and APIs fluently, and unblock blockers fast.",
+      "As a CSE student and full-stack builder, I prototype complex interactions, speak git and APIs fluently, and unblock engineering blockers fast.",
     caseStudySlug: "zenos",
-    caseStudyTitle: "Zenos Real-Time Collab",
-    stats: [
+    caseStudyTitle: "Zenos: Deep Work OS",
+    indicators: [
       {
-        value: 12,
-        suffix: "+",
-        label: "Public Repos",
-        description: "Real production Next.js & TypeScript codebases",
+        label: "Full-Stack Builder",
+        description: "Ship production-grade apps with Next.js, TypeScript, PostgreSQL, and modern tooling",
+        tag: "Stack",
       },
       {
-        value: 450,
-        suffix: "+",
-        label: "Commits This Year",
-        description: "Hands-on builder with genuine technical depth",
+        label: "Live Deployed Products",
+        description: "Multiple projects taken from zero to production with real users",
+        tag: "Output",
       },
       {
-        value: 3,
-        label: "Shipped Side Products",
-        description: "From zero to live deployed apps with active users",
+        label: "CSE Foundation",
+        description: "Computer Science & Engineering student with coursework in Java, C++, data structures, and algorithms",
+        tag: "Background",
       },
     ],
     visual: <TechnicalVisual />,
@@ -114,29 +109,24 @@ const PILLARS: PillarData[] = [
     category: "Growth & Customer Insight",
     claim: "I obsess over the first 5 minutes of a user's experience.",
     description:
-      "Activation is where products win. I eliminate cognitive load, instrument step funnels, and design the shortest path to the user's 'Aha!' moment.",
+      "Activation is where products win. I eliminate cognitive load, map step-by-step funnels, and design the shortest path to the user's 'Aha!' moment.",
     caseStudySlug: "onboarding-friction-score",
-    caseStudyTitle: "Growth Teardown & Redesign",
-    stats: [
+    caseStudyTitle: "Onboarding Friction Score",
+    indicators: [
       {
-        value: 38,
-        prefix: "+",
-        suffix: "%",
-        label: "Activation Lift",
-        description: "Measurable increase in day-1 core action completion",
+        label: "Onboarding Flow Analysis",
+        description: "Mapped complete user journeys from signup to first value moment across multiple SaaS products",
+        tag: "Method",
       },
       {
-        value: 500,
-        suffix: "+",
-        label: "Active Users",
-        description: "Across side projects and community initiatives",
+        label: "Step-Funnel Mapping",
+        description: "Identified exact drop-off points in onboarding flows and proposed targeted interventions",
+        tag: "Method",
       },
       {
-        value: 45,
-        prefix: "-",
-        suffix: "%",
-        label: "Time-to-Value",
-        description: "Cut setup latency from 15 mins to under 3 mins",
+        label: "Friction Score Framework",
+        description: "Created a repeatable scoring rubric to benchmark and compare onboarding experiences",
+        tag: "Framework",
       },
     ],
     visual: <GrowthVisual />,
@@ -156,7 +146,7 @@ export default function PillarStack() {
             What I bring to the table.
           </h2>
           <p className="text-text-secondary text-lg leading-relaxed">
-            Every superpower is backed by proof, shipped code, and measurable outcomes.
+            Every superpower is backed by real work — case studies, shipped products, and structured frameworks.
             Click any pillar to dive into the full case study.
           </p>
         </div>
@@ -179,7 +169,7 @@ export default function PillarStack() {
                 className="rounded-3xl glass-heavy p-6 sm:p-8 md:p-10 border border-border-glass shadow-2xl backdrop-blur-2xl hover-lift transition-all"
               >
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                  {/* Left Column: Claims, Details & Stats */}
+                  {/* Left Column: Claims, Details & Indicators */}
                   <div className="lg:col-span-7 space-y-6">
                     <div className="flex items-center gap-3">
                       <span className="font-mono text-xs font-bold text-accent px-2.5 py-1 rounded-md bg-accent-muted border border-accent/20">
@@ -198,29 +188,26 @@ export default function PillarStack() {
                       {pillar.description}
                     </p>
 
-                    {/* Stats Grid with CountUp */}
+                    {/* Indicators Grid */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-4 border-t border-border-glass">
-                      {pillar.stats.map((stat, i) => (
+                      {pillar.indicators.map((indicator, i) => (
                         <div key={i} className="p-3 rounded-xl bg-surface/50 border border-border-glass/60">
-                          <div className="font-mono text-2xl sm:text-3xl font-extrabold text-accent">
-                            <CountUp
-                              value={stat.value}
-                              prefix={stat.prefix}
-                              suffix={stat.suffix}
-                              decimals={stat.value % 1 !== 0 ? 1 : 0}
-                            />
-                          </div>
-                          <div className="text-xs font-bold text-text-primary mt-1">
-                            {stat.label}
+                          {indicator.tag && (
+                            <span className="inline-block text-[10px] font-mono font-bold uppercase tracking-wider text-accent bg-accent-muted px-1.5 py-0.5 rounded mb-1.5">
+                              {indicator.tag}
+                            </span>
+                          )}
+                          <div className="text-xs font-bold text-text-primary">
+                            {indicator.label}
                           </div>
                           <p className="text-[11px] text-text-tertiary mt-0.5 leading-snug">
-                            {stat.description}
+                            {indicator.description}
                           </p>
                         </div>
                       ))}
                     </div>
 
-                    {/* Case Study CTAs */}
+                    {/* Case Study CTA */}
                     <div className="flex flex-wrap items-center gap-4 pt-2">
                       <Link
                         href={`/work/${pillar.caseStudySlug}`}
@@ -231,13 +218,6 @@ export default function PillarStack() {
                           size={15}
                           className="group-hover:translate-x-1 transition-transform"
                         />
-                      </Link>
-                      <Link
-                        href={`/work/${pillar.caseStudySlug}#results`}
-                        className="inline-flex items-center gap-1.5 text-sm font-medium text-text-secondary hover:text-text-primary transition-colors"
-                      >
-                        <span>View metrics &amp; teardown</span>
-                        <ExternalLink size={13} />
                       </Link>
                     </div>
                   </div>

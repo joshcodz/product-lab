@@ -10,62 +10,84 @@
 
 :root {
   /* Surface & Background */
-  --color-bg:              #faf9f7;
-  --color-bg-secondary:    #f3f1ee;
-  --color-bg-tertiary:     #ebe8e4;
-  --color-surface:         #ffffff;
-  --color-surface-raised:  #ffffff;
+  --color-bg:              #FFF1E8;
+  --color-bg-secondary:    #F6EAE2;
+  --color-bg-tertiary:     #EFE2DA;
+  --color-surface:         rgba(255, 255, 255, 0.72);
+  --color-surface-raised:  rgba(255, 255, 255, 0.85);
 
-  /* Text */
-  --color-text-primary:    #1a1a1a;
-  --color-text-secondary:  #5c5c5c;
-  --color-text-tertiary:   #8a8a8a;
+  /* Text (WCAG AA compliant) */
+  --color-text-primary:    #14142B;
+  --color-text-secondary:  #5B5B72;
+  --color-text-tertiary:   #75758A;
   --color-text-inverted:   #ffffff;
 
   /* Brand Pastels */
-  --color-peach:           #fdd8c9;
-  --color-peach-muted:     #fef0e8;
-  --color-lavender:        #ddd5f3;
-  --color-lavender-muted:  #eee9fa;
-  --color-mint:            #c5edd6;
-  --color-mint-muted:      #e0f5e9;
-  --color-sky:             #bde0fe;
-  --color-sky-muted:       #deeffe;
+  --color-peach:           #FFF1E8;
+  --color-peach-muted:     #FAF0EB;
+  --color-lavender:        #E9E1FF;
+  --color-lavender-muted:  #F2EDFF;
+  --color-mint:            #DDF5EC;
+  --color-mint-muted:      #EAF8F2;
+  --color-sky:             #DCEBFF;
+  --color-sky-muted:       #EBF3FF;
 
-  /* Accent (Teal / Deep Mint) */
-  --color-accent:          #0d9488;
-  --color-accent-hover:    #0f766e;
-  --color-accent-light:    #ccfbf1;
-  --color-accent-muted:    #e0faf5;
+  /* Accent (Single unified Teal) */
+  --color-accent:          #0F766E;
+  --color-accent-hover:    #115E59;
+  --color-accent-light:    #CCFBF1;
+  --color-accent-muted:    #E6FAF6;
 
   /* Borders & Dividers */
-  --color-border:          #e5e3e0;
-  --color-border-light:    #f0eeeb;
-  --color-border-glass:    rgba(255, 255, 255, 0.25);
+  --color-border:          rgba(20, 20, 40, 0.08);
+  --color-border-light:    rgba(20, 20, 40, 0.04);
+  --color-border-glass:    rgba(20, 20, 40, 0.06);
 
-  /* Shadows */
-  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.04);
-  --shadow-md:   0 4px 12px rgba(0, 0, 0, 0.06);
-  --shadow-lg:   0 8px 30px rgba(0, 0, 0, 0.08);
-  --shadow-xl:   0 16px 48px rgba(0, 0, 0, 0.10);
-  --shadow-glow: 0 0 24px rgba(13, 148, 136, 0.15);
+  /* Shadows (Layered soft shadows) */
+  --shadow-sm:   0 1px 2px rgba(20, 20, 40, 0.04);
+  --shadow-md:   0 1px 2px rgba(20, 20, 40, 0.04), 0 8px 24px -8px rgba(20, 20, 40, 0.08);
+  --shadow-lg:   0 1px 2px rgba(20, 20, 40, 0.04), 0 8px 24px -8px rgba(20, 20, 40, 0.08), 0 24px 48px -24px rgba(20, 20, 40, 0.06);
+  --shadow-xl:   0 2px 4px rgba(20, 20, 40, 0.04), 0 16px 36px -8px rgba(20, 20, 40, 0.12), 0 32px 64px -24px rgba(20, 20, 40, 0.08);
+  --shadow-glow: 0 0 20px rgba(15, 118, 110, 0.18);
 
   /* Glass */
-  --glass-bg:              rgba(255, 255, 255, 0.65);
-  --glass-bg-heavy:        rgba(255, 255, 255, 0.80);
-  --glass-border:          rgba(255, 255, 255, 0.35);
+  --glass-bg:              rgba(255, 255, 255, 0.72);
+  --glass-bg-heavy:        rgba(255, 255, 255, 0.85);
+  --glass-border:          rgba(20, 20, 40, 0.06);
+  --glass-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.80);
   --glass-blur:            16px;
 
-  /* Desktop wallpaper gradient */
-  --wallpaper-from:        #fef0e8;
-  --wallpaper-via:         #eee9fa;
-  --wallpaper-to:          #e0f5e9;
+  /* Desktop wallpaper system tokens (Light) */
+  --wp-base:               #FFF1E8;
+  --wallpaper-from:        #FFF1E8;
+  --wallpaper-via:         #E9E1FF;
+  --wallpaper-to:          #DDF5EC;
+
+  --wallpaper-mesh:
+    radial-gradient(circle at 15% 15%, rgba(255, 241, 232, 0.90) 0%, transparent 60%),
+    radial-gradient(circle at 85% 15%, rgba(233, 225, 255, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 15% 85%, rgba(221, 245, 236, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(220, 235, 255, 0.75) 0%, transparent 55%);
+
+  --wallpaper-dots:
+    radial-gradient(circle, rgba(15, 118, 110, 0.28) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 15% 15%, rgba(255, 241, 232, 0.90) 0%, transparent 60%),
+    radial-gradient(circle at 85% 15%, rgba(233, 225, 255, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 15% 85%, rgba(221, 245, 236, 0.75) 0%, transparent 55%),
+    radial-gradient(circle at 85% 85%, rgba(220, 235, 255, 0.75) 0%, transparent 55%);
+
+  --wallpaper-aurora: none;
+
+  --wallpaper-tod-morning:   linear-gradient(135deg, rgba(255, 241, 232, 0.95) 0%, rgba(220, 235, 255, 0.85) 50%, rgba(253, 216, 201, 0.9) 100%);
+  --wallpaper-tod-afternoon: linear-gradient(135deg, rgba(221, 245, 236, 0.95) 0%, rgba(220, 235, 255, 0.85) 50%, rgba(255, 241, 232, 0.9) 100%);
+  --wallpaper-tod-evening:   linear-gradient(135deg, rgba(233, 225, 255, 0.95) 0%, rgba(253, 216, 201, 0.9) 50%, rgba(255, 241, 232, 0.9) 100%);
+  --wallpaper-tod-night:     radial-gradient(circle at 50% 50%, rgba(15, 118, 110, 0.22) 0%, transparent 60%), linear-gradient(135deg, #1f2e3d 0%, #0B0F1A 100%);
 
   /* Radii */
-  --radius-sm:  8px;
-  --radius-md:  12px;
-  --radius-lg:  16px;
-  --radius-xl:  24px;
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
   --radius-icon: 14px;
   --radius-full: 9999px;
 
@@ -94,16 +116,16 @@
 /* ── Dark Mode ────────────────────────────────────────────────── */
 
 .dark {
-  --color-bg:              #0f0f12;
-  --color-bg-secondary:    #18181d;
-  --color-bg-tertiary:     #222228;
-  --color-surface:         #1c1c22;
-  --color-surface-raised:  #242430;
+  --color-bg:              #0B0F1A;
+  --color-bg-secondary:    #121624;
+  --color-bg-tertiary:     #191E30;
+  --color-surface:         rgba(255, 255, 255, 0.06);
+  --color-surface-raised:  rgba(255, 255, 255, 0.09);
 
-  --color-text-primary:    #f0eeeb;
-  --color-text-secondary:  #a0a0a8;
-  --color-text-tertiary:   #6c6c76;
-  --color-text-inverted:   #0f0f12;
+  --color-text-primary:    #F4F4F8;
+  --color-text-secondary:  #A3A8BC;
+  --color-text-tertiary:   #757B94;
+  --color-text-inverted:   #0B0F1A;
 
   --color-peach:           #5c3a2a;
   --color-peach-muted:     #2e1e18;
@@ -114,29 +136,50 @@
   --color-sky:             #1e3a5c;
   --color-sky-muted:       #152636;
 
-  --color-accent:          #2dd4bf;
-  --color-accent-hover:    #5eead4;
+  --color-accent:          #2DD4BF;
+  --color-accent-hover:    #5EEAD4;
   --color-accent-light:    #0d3d38;
   --color-accent-muted:    #0a2e2a;
 
-  --color-border:          #2a2a32;
-  --color-border-light:    #1e1e26;
-  --color-border-glass:    rgba(255, 255, 255, 0.08);
+  --color-border:          rgba(255, 255, 255, 0.10);
+  --color-border-light:    rgba(255, 255, 255, 0.06);
+  --color-border-glass:    rgba(255, 255, 255, 0.10);
 
-  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.20);
-  --shadow-md:   0 4px 12px rgba(0, 0, 0, 0.30);
-  --shadow-lg:   0 8px 30px rgba(0, 0, 0, 0.35);
-  --shadow-xl:   0 16px 48px rgba(0, 0, 0, 0.40);
-  --shadow-glow: 0 0 24px rgba(45, 212, 191, 0.20);
+  --shadow-sm:   0 1px 2px rgba(0, 0, 0, 0.35);
+  --shadow-md:   0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px -8px rgba(0, 0, 0, 0.45);
+  --shadow-lg:   0 1px 2px rgba(0, 0, 0, 0.30), 0 8px 24px -8px rgba(0, 0, 0, 0.45), 0 24px 48px -24px rgba(0, 0, 0, 0.50);
+  --shadow-xl:   0 2px 4px rgba(0, 0, 0, 0.35), 0 16px 36px -8px rgba(0, 0, 0, 0.55), 0 32px 64px -24px rgba(0, 0, 0, 0.60);
+  --shadow-glow: 0 0 24px rgba(45, 212, 191, 0.22);
 
-  --glass-bg:              rgba(28, 28, 34, 0.65);
-  --glass-bg-heavy:        rgba(28, 28, 34, 0.85);
-  --glass-border:          rgba(255, 255, 255, 0.06);
+  --glass-bg:              rgba(255, 255, 255, 0.06);
+  --glass-bg-heavy:        rgba(255, 255, 255, 0.09);
+  --glass-border:          rgba(255, 255, 255, 0.10);
+  --glass-inner-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.08);
   --glass-blur:            20px;
 
-  --wallpaper-from:        #1a1020;
-  --wallpaper-via:         #0f1a2e;
-  --wallpaper-to:          #0a1e1a;
+  /* Desktop wallpaper system tokens (Dark) */
+  --wp-base:               #0B0F1A;
+  --wallpaper-from:        #0B0F1A;
+  --wallpaper-via:         #121624;
+  --wallpaper-to:          #08121E;
+
+  --wallpaper-mesh:
+    radial-gradient(circle at 50% 45%, rgba(45, 212, 191, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 15% 20%, rgba(79, 70, 229, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 85% 75%, rgba(139, 92, 246, 0.18) 0%, transparent 55%);
+
+  --wallpaper-dots:
+    radial-gradient(circle, rgba(45, 212, 191, 0.35) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 50% 45%, rgba(45, 212, 191, 0.18) 0%, transparent 60%),
+    radial-gradient(circle at 15% 20%, rgba(79, 70, 229, 0.22) 0%, transparent 55%),
+    radial-gradient(circle at 85% 75%, rgba(139, 92, 246, 0.18) 0%, transparent 55%);
+
+  --wallpaper-aurora: none;
+
+  --wallpaper-tod-morning:   linear-gradient(135deg, rgba(79, 70, 229, 0.35) 0%, rgba(45, 212, 191, 0.25) 50%, #0B0F1A 100%);
+  --wallpaper-tod-afternoon: linear-gradient(135deg, rgba(45, 212, 191, 0.28) 0%, rgba(30, 76, 52, 0.45) 50%, #0B0F1A 100%);
+  --wallpaper-tod-evening:   linear-gradient(135deg, rgba(139, 92, 246, 0.35) 0%, rgba(79, 70, 229, 0.25) 50%, #0B0F1A 100%);
+  --wallpaper-tod-night:     radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.22) 0%, transparent 60%), linear-gradient(135deg, #121826 0%, #0B0F1A 100%);
 }
 
 /* ── Base Layer ───────────────────────────────────────────────── */
@@ -191,7 +234,7 @@
     backdrop-filter: blur(var(--glass-blur));
     -webkit-backdrop-filter: blur(var(--glass-blur));
     border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-md), var(--glass-inner-highlight);
   }
 
   .glass-heavy {
@@ -199,17 +242,87 @@
     backdrop-filter: blur(calc(var(--glass-blur) * 1.5));
     -webkit-backdrop-filter: blur(calc(var(--glass-blur) * 1.5));
     border: 1px solid var(--glass-border);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-lg), var(--glass-inner-highlight);
+  }
+
+  /* Active wallpaper resolution based on data-wallpaper on <html> */
+  html,
+  html[data-wallpaper="mesh"] {
+    --wallpaper-bg: var(--wallpaper-mesh);
+    --wallpaper-bg-size: auto;
+    --wallpaper-bg-repeat: no-repeat;
+  }
+
+  html[data-wallpaper="dots"] {
+    --wallpaper-bg: var(--wallpaper-dots);
+    --wallpaper-bg-size: 24px 24px, 100% 100%, 100% 100%, 100% 100%, 100% 100%;
+    --wallpaper-bg-repeat: repeat, no-repeat, no-repeat, no-repeat, no-repeat;
+  }
+
+  html[data-wallpaper="aurora"] {
+    --wallpaper-bg: none;
+    --wallpaper-bg-size: auto;
+    --wallpaper-bg-repeat: no-repeat;
+  }
+
+  html[data-wallpaper="time-of-day"] {
+    --wallpaper-bg: var(--wallpaper-tod-morning);
+    --wallpaper-bg-size: cover;
+    --wallpaper-bg-repeat: no-repeat;
+  }
+
+  html[data-wallpaper="time-of-day"][data-time="morning"] {
+    --wallpaper-bg: var(--wallpaper-tod-morning);
+  }
+
+  html[data-wallpaper="time-of-day"][data-time="afternoon"] {
+    --wallpaper-bg: var(--wallpaper-tod-afternoon);
+  }
+
+  html[data-wallpaper="time-of-day"][data-time="evening"] {
+    --wallpaper-bg: var(--wallpaper-tod-evening);
+  }
+
+  html[data-wallpaper="time-of-day"][data-time="night"] {
+    --wallpaper-bg: var(--wallpaper-tod-night);
   }
 
   /* Desktop wallpaper background */
   .wallpaper {
-    background: linear-gradient(
-      135deg,
-      var(--wallpaper-from) 0%,
-      var(--wallpaper-via) 50%,
-      var(--wallpaper-to) 100%
-    );
+    position: relative;
+    background-color: var(--wp-base);
+    background-image: var(--wallpaper-bg);
+    background-size: var(--wallpaper-bg-size, auto);
+    background-repeat: var(--wallpaper-bg-repeat, no-repeat);
+    transition: background-color var(--duration-normal) var(--ease-smooth);
+  }
+
+  /* Aurora: two large blurred blobs drifting slowly on .wallpaper */
+  html[data-wallpaper="aurora"] .wallpaper::before {
+    content: "";
+    position: absolute;
+    inset: -15%;
+    width: 130%;
+    height: 130%;
+    z-index: 1;
+    pointer-events: none;
+    background-image:
+      radial-gradient(ellipse 50% 45% at 20% 30%, rgba(221, 213, 243, 0.70) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 45% at 80% 70%, rgba(197, 237, 214, 0.65) 0%, transparent 65%);
+    opacity: 0.85;
+    filter: blur(85px);
+    animation: aurora-drift 24s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  html.dark[data-wallpaper="aurora"] .wallpaper::before,
+  .dark html[data-wallpaper="aurora"] .wallpaper::before {
+    background-image:
+      radial-gradient(ellipse 50% 45% at 20% 30%, rgba(61, 52, 96, 0.80) 0%, transparent 65%),
+      radial-gradient(ellipse 50% 45% at 80% 70%, rgba(30, 76, 52, 0.70) 0%, transparent 65%),
+      radial-gradient(circle at 50% 50%, rgba(45, 212, 191, 0.20) 0%, transparent 60%);
+    opacity: 0.75;
+    filter: blur(95px);
   }
 
   /* Content container */
@@ -254,8 +367,37 @@
     box-shadow: var(--shadow-glow);
   }
 
-  /* Grain overlay (for wallpaper) */
-  .grain::after {
+  /* Global grain toggle (independent overlay on body::after) */
+  html[data-grain="true"] body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.055;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 160px 160px;
+    mix-blend-mode: multiply;
+  }
+
+  html.dark[data-grain="true"] body::after,
+  .dark html[data-grain="true"] body::after {
+    opacity: 0.065;
+    mix-blend-mode: screen;
+  }
+
+  html[data-grain="false"] body::after {
+    display: none !important;
+  }
+
+  /* Suppress legacy element-specific grain when custom grain toggle is present */
+  html[data-grain] .grain::after {
+    display: none !important;
+  }
+
+  /* Legacy fallback when data-grain attribute is not yet mounted */
+  html:not([data-grain]) .grain::after {
     content: "";
     position: absolute;
     inset: 0;
@@ -276,8 +418,59 @@
     scrollbar-width: none;
   }
 
-  /* Reduced motion: disable parallax, marquee, etc. */
+  /* Sleek custom scrollbars */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: var(--border-glass);
+    border-radius: 9999px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--accent);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border-glass) transparent;
+  }
+
+  /* Aurora drifting animation */
+  @keyframes aurora-drift {
+    0% {
+      transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    }
+    50% {
+      transform: translate3d(-3%, 4%, 0) scale(1.06) rotate(3deg);
+    }
+    100% {
+      transform: translate3d(4%, -3%, 0) scale(0.95) rotate(-2deg);
+    }
+  }
+
+  /* Slow bounce for scroll-cue chevron */
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  .animate-bounce-slow {
+    animation: bounce-slow 1.6s ease-in-out infinite;
+  }
+
+  /* Reduced motion: disable aurora animation, parallax, marquee, etc. */
   @media (prefers-reduced-motion: reduce) {
+    html[data-wallpaper="aurora"] .wallpaper::before,
+    html[data-wallpaper="aurora"] body::before {
+      animation: none !important;
+    }
     .motion-safe-only {
       animation: none !important;
       transition: none !important;

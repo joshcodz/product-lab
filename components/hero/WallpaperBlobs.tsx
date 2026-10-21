@@ -1,12 +1,20 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useTheme } from "@/components/ThemeProvider";
 
 interface WallpaperBlobsProps {
   className?: string;
 }
 
 export default function WallpaperBlobs({ className = "" }: WallpaperBlobsProps) {
+  const { wallpaper } = useTheme();
+
+  // Only render moving ambient blobs for default mesh; other wallpapers have their own distinct visuals
+  if (wallpaper !== "mesh") {
+    return null;
+  }
+
   return (
     <div className={`absolute inset-0 overflow-hidden -z-10 ${className}`}>
       {/* Blob 1 - Peach, top-left drift */}

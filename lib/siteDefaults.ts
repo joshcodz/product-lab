@@ -37,7 +37,7 @@ export const DEFAULT_SITE_CONFIG: SiteDefaults = {
   hero_secondary_url: "#contact",
 
   status_badge: "Open to internships",
-  status_headline: "Josh · Aspiring PM",
+  status_headline: "Josh's Product Lab",
 
   about_text:
     "Started as a Computer Science undergrad at SRMIST writing C++ and building full-stack web apps. Quickly realized my real thrill wasn't just writing clean syntax — it was figuring out what to build in the first place and why anyone would care.\n\nProduct Manager Intern at AlienHouse Networks, driving user journeys and spec writing with an engineering team of 8. In parallel, leading tech & community at Founders Club SRMIST, helping builders turn hackathon ideas into functional products.\n\nAiming for Associate Product Manager or Founder's Office roles at ambitious B2B SaaS and developer tools startups.",

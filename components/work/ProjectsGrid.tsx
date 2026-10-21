@@ -5,13 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight, Sparkles, Terminal, Code2, Compass } from "lucide-react";
 
-export type ProjectCategory = "All" | "Case studies" | "Side projects" | "Concepts";
+export type ProjectCategory = "All" | "Case studies" | "Side projects";
 
 export interface ProjectCardData {
   id: string;
   name: string;
   description: string;
-  category: "Case studies" | "Side projects" | "Concepts";
+  category: "Case studies" | "Side projects";
   tags: string[];
   status: "Live" | "Prototype" | "Concept" | "Shipped";
   slug?: string;
@@ -50,39 +50,9 @@ const PROJECTS: ProjectCardData[] = [
     slug: "alienhouse-internship",
     image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80",
   },
-  {
-    id: "4",
-    name: "Personal Assistant App",
-    description: "Context-aware AI productivity copilot that prioritizes daily tasks based on developer calendar habits.",
-    category: "Side projects",
-    tags: ["AI", "LLMs", "Productivity"],
-    status: "Prototype",
-    slug: "personal-assistant-app",
-    image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=600&auto=format&fit=crop&q=80",
-  },
-  {
-    id: "5",
-    name: "Linear Keyboard Navigation Teardown",
-    description: "Deconstructed shortcut architecture to design lightning-fast micro-interactions for web apps.",
-    category: "Case studies",
-    tags: ["UX Research", "Dev Tools"],
-    status: "Shipped",
-    slug: "product-teardowns",
-    image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600&auto=format&fit=crop&q=80",
-  },
-  {
-    id: "6",
-    name: "Zero-Latency Spec Reader",
-    description: "Spec markdown visualizer with real-time PRD syntax checking and Jira bi-directional sync.",
-    category: "Concepts",
-    tags: ["Spec Ops", "Product Ops", "Concept"],
-    status: "Concept",
-    slug: "founders-club",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&auto=format&fit=crop&q=80",
-  },
 ];
 
-const CATEGORIES: ProjectCategory[] = ["All", "Case studies", "Side projects", "Concepts"];
+const CATEGORIES: ProjectCategory[] = ["All", "Case studies", "Side projects"];
 
 export default function ProjectsGrid() {
   const [activeFilter, setActiveFilter] = useState<ProjectCategory>("All");

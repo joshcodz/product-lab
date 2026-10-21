@@ -45,3 +45,26 @@ CREATE TABLE IF NOT EXISTS social_links (
   url        TEXT NOT NULL DEFAULT '',
   sort_order INTEGER NOT NULL DEFAULT 0
 );
+
+-- 4. guestbook_notes
+CREATE TABLE IF NOT EXISTS guestbook_notes (
+  id         UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  message    TEXT NOT NULL,
+  name       TEXT NOT NULL DEFAULT 'Anonymous',
+  color      TEXT NOT NULL DEFAULT 'yellow',
+  emoji      TEXT,
+  status     TEXT NOT NULL DEFAULT 'pending'
+    CHECK (status IN ('pending', 'approved', 'rejected')),
+  reported   BOOLEAN NOT NULL DEFAULT false,
+  ip_hash    TEXT NOT NULL,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+-- Fast lookup for public reads: approved notes, newest first
+CREATE INDEX IF NOT EXISTS idx_guestbook_approved
+  ON guestbook_notes (status, created_at DESC)
+  WHERE status = 'approved';
+
+-- Fast lookup for rate-limit checks by hashed IP
+CREATE INDEX IF NOT EXISTS idx_guestbook_ip_rate
+  ON guestbook_notes (ip_hash, created_at DESC);

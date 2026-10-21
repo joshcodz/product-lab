@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { CheckCircle2, FileCode, Users, TrendingUp, Sparkles, Filter, ArrowUpRight } from "lucide-react";
+import { Search, FileText, Code2, TrendingUp, CheckCircle2, ArrowRight, Layers, Target } from "lucide-react";
 
 export function DiscoveryVisual() {
   return (
@@ -14,46 +14,40 @@ export function DiscoveryVisual() {
           </span>
         </div>
         <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-surface border border-border-glass text-text-secondary">
-          24 User Interviews
+          OFS Framework
         </span>
       </div>
 
       <div className="space-y-3 my-4">
-        <div className="p-3 rounded-xl bg-surface/70 border border-border-glass">
-          <div className="flex items-center justify-between text-xs mb-1">
-            <span className="font-semibold text-text-primary">
-              Core Pain: Setup Latency
-            </span>
-            <span className="text-red-500 font-mono text-[10px] font-bold">
-              High Friction (88%)
-            </span>
-          </div>
-          <p className="text-[11px] text-text-secondary leading-snug">
-            &ldquo;Users abandon during environment setup because configuration takes 15+ manual minutes.&rdquo;
-          </p>
-        </div>
-
-        <div className="p-3 rounded-xl bg-accent-muted/40 border border-accent/20">
-          <div className="flex items-center justify-between text-xs mb-1">
-            <span className="font-semibold text-accent">
-              Validated Solution
-            </span>
-            <span className="text-accent font-mono text-[10px] font-bold">
-              P0 Scope
-            </span>
-          </div>
-          <p className="text-[11px] text-text-primary leading-snug font-medium">
-            1-Click automated template cloning + zero-config sandbox environment.
-          </p>
-        </div>
+        {[
+          { label: "Identify friction points", icon: Search, status: "Mapped" },
+          { label: "Score severity & frequency", icon: Target, status: "Scored" },
+          { label: "Prioritize by user impact", icon: Layers, status: "Ranked" },
+          { label: "Define solution scope", icon: ArrowRight, status: "Scoped" },
+        ].map((step, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1, duration: 0.4 }}
+            className="flex items-center gap-3 p-2.5 rounded-xl bg-surface/70 border border-border-glass"
+          >
+            <div className="w-7 h-7 rounded-lg bg-accent-muted flex items-center justify-center shrink-0">
+              <step.icon size={13} className="text-accent" />
+            </div>
+            <span className="text-xs font-medium text-text-primary flex-1">{step.label}</span>
+            <span className="text-[10px] font-mono font-bold text-emerald-500">{step.status}</span>
+          </motion.div>
+        ))}
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t border-border-glass/60 text-[11px] text-text-tertiary font-mono">
         <span className="flex items-center gap-1">
-          <Filter size={11} className="text-accent" />
-          4 bloated feature ideas cut
+          <Search size={11} className="text-accent" />
+          Structured discovery process
         </span>
-        <span className="text-emerald-500 font-bold">Validated</span>
+        <span className="text-accent font-semibold">Framework</span>
       </div>
     </div>
   );
@@ -70,34 +64,41 @@ export function ExecutionVisual() {
             <div className="w-2.5 h-2.5 rounded-full bg-green-400" />
           </div>
           <span className="text-xs font-mono font-bold text-text-primary ml-1">
-            PRD-2026.4 // Specs &amp; Delivery
+            Spec & Delivery Process
           </span>
         </div>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 font-bold">
-          Ready for Dev
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-accent-muted text-accent font-bold">
+          PM Intern
         </span>
       </div>
 
       <div className="my-3 space-y-2">
         <div className="text-[11px] font-mono text-text-tertiary">
-          // Acceptance Criteria Checklist
+          // Deliverable checklist approach
         </div>
         {[
-          { label: "Token-bucket rate limiting specified with edge-case handling", done: true },
-          { label: "Telemetry events schema mapped for amplitude tracking", done: true },
-          { label: "Zero-data empty state mockups attached for engineering", done: true },
-          { label: "Backward compatible DB migration plan approved", done: true },
+          { label: "Clear problem statement with user context", done: true },
+          { label: "Acceptance criteria for every feature spec", done: true },
+          { label: "Edge-case trees and error state handling", done: true },
+          { label: "Cross-functional stakeholder alignment", done: true },
         ].map((item, i) => (
-          <div key={i} className="flex items-start gap-2 p-2 rounded-lg bg-surface/50 border border-border-glass text-xs">
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 5 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.08, duration: 0.3 }}
+            className="flex items-start gap-2 p-2 rounded-lg bg-surface/50 border border-border-glass text-xs"
+          >
             <CheckCircle2 size={13} className="text-emerald-500 shrink-0 mt-0.5" />
             <span className="text-text-secondary leading-snug">{item.label}</span>
-          </div>
+          </motion.div>
         ))}
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t border-border-glass/60 text-[11px] font-mono text-text-tertiary">
-        <span>Cycle Time: 2.5 weeks</span>
-        <span className="text-accent font-semibold">14 features shipped</span>
+        <span>AlienHouse Networks</span>
+        <span className="text-accent font-semibold">Structured specs</span>
       </div>
     </div>
   );
@@ -108,43 +109,52 @@ export function TechnicalVisual() {
     <div className="w-full h-full min-h-[320px] rounded-2xl glass-heavy p-5 border border-border-glass flex flex-col justify-between overflow-hidden shadow-inner font-mono">
       <div className="flex items-center justify-between pb-3 border-b border-border-glass">
         <div className="flex items-center gap-2">
-          <FileCode size={14} className="text-accent" />
+          <Code2 size={14} className="text-accent" />
           <span className="text-xs font-bold text-text-primary">
-            prototype_sandbox.tsx
+            Tech Stack
           </span>
         </div>
-        <span className="text-[10px] px-2 py-0.5 rounded bg-accent text-text-inverted font-bold">
-          LIVE DEMO
+        <span className="text-[10px] px-2 py-0.5 rounded bg-accent-muted text-accent font-bold">
+          Builder
         </span>
       </div>
 
-      <div className="my-3 p-3.5 rounded-xl bg-bg/80 border border-border-glass text-[11px] leading-relaxed overflow-x-auto text-text-secondary">
-        <div>
-          <span className="text-pink-400">const</span>{" "}
-          <span className="text-blue-400">frictionScore</span> ={" "}
-          <span className="text-yellow-400">useCallback</span>(() =&gt; &#123;
-        </div>
-        <div className="pl-4 text-text-tertiary">
-          // Measure time-to-first-value &amp; drop points
-        </div>
-        <div className="pl-4">
-          <span className="text-pink-400">const</span> latency = tracker.
-          <span className="text-accent">getMilestoneDuration</span>(&apos;signup_to_activation&apos;);
-        </div>
-        <div className="pl-4">
-          <span className="text-purple-400">return</span> latency &lt;{" "}
-          <span className="text-emerald-400">180</span> ?{" "}
-          <span className="text-emerald-400">&apos;OPTIMAL&apos;</span> :{" "}
-          <span className="text-amber-400">&apos;NEEDS_REFINEMENT&apos;</span>;
-        </div>
-        <div>&#125;, [tracker]);</div>
+      <div className="my-3 space-y-3">
+        {[
+          { category: "Frontend", tools: ["Next.js", "React", "TypeScript", "Framer Motion"] },
+          { category: "Backend", tools: ["Node.js", "PostgreSQL", "REST APIs"] },
+          { category: "Tooling", tools: ["Git", "Vercel", "Figma", "VS Code"] },
+        ].map((row, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, x: -8 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1, duration: 0.4 }}
+            className="p-3 rounded-xl bg-surface/70 border border-border-glass"
+          >
+            <div className="text-[10px] font-bold uppercase tracking-wider text-accent mb-1.5">
+              {row.category}
+            </div>
+            <div className="flex flex-wrap gap-1.5">
+              {row.tools.map((tool) => (
+                <span
+                  key={tool}
+                  className="text-[11px] px-2 py-0.5 rounded-md bg-bg/80 border border-border-glass text-text-secondary"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
+          </motion.div>
+        ))}
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t border-border-glass/60 text-[11px] text-text-tertiary">
-        <span>450+ commits this year</span>
+        <span>CSE student & builder</span>
         <span className="text-accent font-semibold flex items-center gap-1">
           Full-stack fluent
-          <Sparkles size={11} />
+          <Code2 size={11} />
         </span>
       </div>
     </div>
@@ -158,42 +168,37 @@ export function GrowthVisual() {
         <div className="flex items-center gap-2">
           <TrendingUp size={14} className="text-emerald-500" />
           <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-primary">
-            First 5-Min Activation Funnel
+            Onboarding Analysis Process
           </span>
         </div>
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-500 font-bold">
-          +38% Lift
-        </span>
       </div>
 
       <div className="my-3 space-y-2.5">
         {[
-          { step: "1. Land on app", before: 100, after: 100 },
-          { step: "2. Sign up / SSO", before: 68, after: 89 },
-          { step: "3. First project created", before: 34, after: 68 },
-          { step: "4. Invites teammate (Aha moment)", before: 18, after: 42 },
+          { step: "1. Map the full onboarding flow", detail: "Every screen, click, and decision point" },
+          { step: "2. Identify friction & drop-off points", detail: "Where users hesitate, error, or abandon" },
+          { step: "3. Score each step with the OFS rubric", detail: "Severity × frequency × user impact" },
+          { step: "4. Design targeted interventions", detail: "Reduce steps, clarify copy, remove blockers" },
         ].map((item, i) => (
-          <div key={i} className="space-y-1">
-            <div className="flex justify-between text-[11px] font-medium text-text-secondary">
-              <span>{item.step}</span>
-              <span className="font-mono text-xs">
-                <span className="text-text-tertiary line-through mr-1.5">{item.before}%</span>
-                <span className="text-emerald-500 font-bold">{item.after}%</span>
-              </span>
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 8 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: i * 0.1, duration: 0.4 }}
+            className="p-2.5 rounded-xl bg-surface/70 border border-border-glass"
+          >
+            <div className="flex items-center justify-between text-[11px] mb-0.5">
+              <span className="font-semibold text-text-primary">{item.step}</span>
             </div>
-            <div className="w-full h-2 bg-surface rounded-full overflow-hidden flex">
-              <div
-                className="bg-accent h-full rounded-full transition-all duration-1000"
-                style={{ width: `${item.after}%` }}
-              />
-            </div>
-          </div>
+            <p className="text-[10px] text-text-tertiary leading-snug">{item.detail}</p>
+          </motion.div>
         ))}
       </div>
 
       <div className="flex items-center justify-between pt-2 border-t border-border-glass/60 text-[11px] font-mono text-text-tertiary">
-        <span>Time-to-value: -45%</span>
-        <span className="text-emerald-500 font-bold">500+ Active Users</span>
+        <span>Friction Score Framework</span>
+        <span className="text-emerald-500 font-bold">Repeatable process</span>
       </div>
     </div>
   );

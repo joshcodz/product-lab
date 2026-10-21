@@ -1,39 +1,27 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
   Clock,
-  Calendar,
-  Users,
-  Wrench,
-  CheckCircle2,
-  XCircle,
   ExternalLink,
-  FileText,
   Copy,
   Check,
   Quote,
   Sparkles,
+  AlertTriangle,
+  ArrowRightCircle,
+  HelpCircle,
+  Code2,
+  Terminal,
+  Layers,
+  CheckCircle2,
 } from "lucide-react";
 import { Github } from "@/components/icons/BrandIcons";
-import { CaseStudyData } from "@/lib/caseStudies";
-
-const TOC_SECTIONS = [
-  { id: "overview", label: "Overview & Metrics" },
-  { id: "tldr", label: "TL;DR" },
-  { id: "context", label: "Context & Problem" },
-  { id: "discovery", label: "User Discovery" },
-  { id: "goals", label: "Goals & Metrics" },
-  { id: "prioritization", label: "Prioritization" },
-  { id: "solution", label: "Solution & Flows" },
-  { id: "execution", label: "Execution & PRD" },
-  { id: "results", label: "Results & Feedback" },
-  { id: "learnings", label: "Learnings" },
-];
+import { CaseStudyData, CaseStudySection } from "@/lib/caseStudies";
 
 export default function CaseStudyView({ study }: { study: CaseStudyData }) {
   const { scrollYProgress } = useScroll();
@@ -41,11 +29,30 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
   const [activeSection, setActiveSection] = useState("overview");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
+  // Build dynamic Table of Contents
+  const tocSections = useMemo(() => {
+    const list = [
+      { id: "overview", label: "Overview & Metrics" },
+      { id: "tldr", label: "Executive Summary" },
+    ];
+    if (study.sections) {
+      study.sections.forEach((s) => {
+        list.push({ id: s.id, label: s.title });
+      });
+    }
+    // Check if learnings is not already in sections
+    const hasLearnings = study.sections?.some((s) => s.id === "learnings");
+    if (!hasLearnings && study.learnings && study.learnings.length > 0) {
+      list.push({ id: "learnings", label: "What I Learned" });
+    }
+    return list;
+  }, [study]);
+
   // Scroll-spy for TOC
   useEffect(() => {
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 200;
-      for (const section of TOC_SECTIONS) {
+      const scrollPosition = window.scrollY + 220;
+      for (const section of tocSections) {
         const el = document.getElementById(section.id);
         if (el) {
           const top = el.offsetTop;
@@ -60,7 +67,7 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+  }, [tocSections]);
 
   const copyHeadingLink = (id: string) => {
     const url = `${window.location.origin}${window.location.pathname}#${id}`;
@@ -111,13 +118,13 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
                   Table of Contents
                 </p>
                 <nav className="space-y-1">
-                  {TOC_SECTIONS.map((sec) => (
+                  {tocSections.map((sec) => (
                     <a
                       key={sec.id}
                       href={`#${sec.id}`}
                       className={`block text-xs py-1.5 px-3 rounded-lg transition-all ${
                         activeSection === sec.id
-                          ? "bg-accent-muted text-accent font-bold"
+                          ? "bg-accent-muted text-accent font-bold border-l-2 border-accent"
                           : "text-text-secondary hover:text-text-primary hover:bg-surface/50"
                       }`}
                     >
@@ -127,31 +134,51 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
                 </nav>
               </div>
 
-              {/* Quick Links */}
+              {/* Quick Links & Artifacts */}
               <div className="p-4 rounded-xl glass border border-border-glass space-y-2.5 text-xs font-medium">
                 <span className="text-[10px] font-mono text-text-tertiary uppercase tracking-wider block mb-1">
-                  Artifacts &amp; Code
+                  Artifacts &amp; Links
                 </span>
                 {study.links.liveDemo && (
-                  <a
-                    href={study.links.liveDemo}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center justify-between text-text-secondary hover:text-accent transition-colors"
-                  >
-                    <span>Live Demo</span>
-                    <ExternalLink size={12} />
-                  </a>
+                  <div className="text-text-secondary">
+                    {study.links.liveDemo.includes("[VERIFY") ? (
+                      <div className="flex items-center justify-between text-amber-500 py-1">
+                        <span className="font-mono text-[11px]">Live Demo [VERIFY link]</span>
+                        <HelpCircle size={12} />
+                      </div>
+                    ) : (
+                      <a
+                        href={study.links.liveDemo}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center justify-between text-text-secondary hover:text-accent transition-colors py-1"
+                      >
+                        <span>Live Demo</span>
+                        <ExternalLink size={12} />
+                      </a>
+                    )}
+                  </div>
                 )}
                 {study.links.repo && study.links.repo !== "#" && (
                   <a
                     href={study.links.repo}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-between text-text-secondary hover:text-accent transition-colors"
+                    className="flex items-center justify-between text-text-secondary hover:text-accent transition-colors py-1"
                   >
                     <span>GitHub Repository</span>
                     <Github size={12} />
+                  </a>
+                )}
+                {study.links.prd && (
+                  <a
+                    href={study.links.prd}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between text-text-secondary hover:text-accent transition-colors py-1"
+                  >
+                    <span>PRD Documentation</span>
+                    <ExternalLink size={12} />
                   </a>
                 )}
               </div>
@@ -165,9 +192,22 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
             {/* 1. Hero Header */}
             <section id="overview" className="space-y-6">
               <div className="space-y-3">
-                <span className="text-xs font-mono text-accent font-bold uppercase tracking-widest">
-                  Case Study // {study.category}
-                </span>
+                <div className="flex flex-wrap items-center gap-2">
+                  <span className="text-xs font-mono text-accent font-bold uppercase tracking-widest">
+                    Case Study // {study.category}
+                  </span>
+                  {study.statusBadge && (
+                    <span
+                      className={`text-[11px] font-mono px-2.5 py-0.5 rounded-full border ${
+                        study.statusBadge.includes("[VERIFY")
+                          ? "bg-amber-500/10 text-amber-500 border-amber-500/30"
+                          : "bg-surface text-text-secondary border-border-glass"
+                      }`}
+                    >
+                      {study.statusBadge}
+                    </span>
+                  )}
+                </div>
                 <h1 className="font-display text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-text-primary leading-[1.08]">
                   {study.title}
                 </h1>
@@ -177,7 +217,7 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
               </div>
 
               {/* Meta Grid */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 p-5 rounded-2xl glass border border-border-glass text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl glass border border-border-glass text-xs">
                 <div>
                   <span className="text-text-tertiary block font-mono text-[10px] uppercase">My Role</span>
                   <span className="font-semibold text-text-primary mt-1 block">{study.role}</span>
@@ -191,24 +231,54 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
                   <span className="font-semibold text-text-primary mt-1 block">{study.team}</span>
                 </div>
                 <div>
-                  <span className="text-text-tertiary block font-mono text-[10px] uppercase">Tools</span>
-                  <span className="font-semibold text-text-primary mt-1 block">{study.tools.slice(0, 3).join(", ")}</span>
+                  <span className="text-text-tertiary block font-mono text-[10px] uppercase mb-1.5">Stack / Tools</span>
+                  <div className="flex flex-wrap gap-1">
+                    {study.tools.map((t, i) => (
+                      <span
+                        key={i}
+                        className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-surface/80 border border-border-glass text-text-secondary"
+                      >
+                        {t}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
 
               {/* 3 Headline Metrics in Big Numbers */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-                {study.headlineMetrics.map((metric, i) => (
-                  <div key={i} className="p-5 rounded-2xl glass-heavy border border-accent/20 shadow-md">
-                    <div className="font-mono text-4xl sm:text-5xl font-extrabold text-accent">
-                      {metric.value}
+                {study.headlineMetrics.map((metric, i) => {
+                  const isPlaceholder = metric.isPlaceholder || metric.value.includes("[VERIFY");
+                  return (
+                    <div
+                      key={i}
+                      className={`p-5 rounded-2xl glass-heavy border shadow-md ${
+                        isPlaceholder
+                          ? "border-dashed border-amber-500/40 bg-amber-500/5"
+                          : "border-accent/20"
+                      }`}
+                    >
+                      <div className="flex items-center justify-between">
+                        <div
+                          className={`font-mono text-3xl sm:text-4xl font-extrabold ${
+                            isPlaceholder ? "text-amber-500 text-2xl" : "text-accent"
+                          }`}
+                        >
+                          {metric.value}
+                        </div>
+                        {isPlaceholder && (
+                          <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-500 border border-amber-500/30">
+                            UNCONFIRMED
+                          </span>
+                        )}
+                      </div>
+                      <div className="font-display font-bold text-sm text-text-primary mt-1">
+                        {metric.label}
+                      </div>
+                      <p className="text-xs text-text-tertiary mt-0.5">{metric.sublabel}</p>
                     </div>
-                    <div className="font-display font-bold text-sm text-text-primary mt-1">
-                      {metric.label}
-                    </div>
-                    <p className="text-xs text-text-tertiary mt-0.5">{metric.sublabel}</p>
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             </section>
 
@@ -234,333 +304,329 @@ export default function CaseStudyView({ study }: { study: CaseStudyData }) {
               </div>
             </section>
 
-            {/* 3. Context & Problem */}
-            <section id="context" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  Context &amp; Problem Space
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("context")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                  aria-label="Copy link to Context"
-                >
-                  {copiedId === "context" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-              <p className="text-base leading-relaxed text-text-secondary">
-                {study.context.overview}
-              </p>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
-                <div className="p-4 rounded-xl glass border border-border-glass">
-                  <span className="text-xs font-mono font-bold text-accent uppercase block mb-1">
-                    Target Persona
-                  </span>
-                  <p className="text-xs text-text-secondary leading-relaxed">
-                    {study.context.userProfile}
-                  </p>
-                </div>
-                <div className="p-4 rounded-xl glass border border-border-glass">
-                  <span className="text-xs font-mono font-bold text-red-400 uppercase block mb-1">
-                    Business Impact of Failure
-                  </span>
-                  <p className="text-xs text-text-secondary leading-relaxed">
-                    {study.context.businessImpact}
-                  </p>
-                </div>
-              </div>
-            </section>
-
-            {/* 4. Discovery */}
-            <section id="discovery" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  User Discovery &amp; Research
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("discovery")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                  aria-label="Copy link to Discovery"
-                >
-                  {copiedId === "discovery" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-              <p className="text-sm text-text-secondary">
-                <span className="font-semibold text-text-primary">Methodology: </span>
-                {study.discovery.methodology}
-              </p>
-
-              {/* Pull quote */}
-              <div className="p-6 rounded-2xl bg-accent-muted/30 border-l-4 border-accent my-4 space-y-2">
-                <Quote size={20} className="text-accent" />
-                <p className="font-display italic text-base sm:text-lg text-text-primary leading-snug">
-                  &ldquo;{study.discovery.pullQuote}&rdquo;
-                </p>
-                <p className="text-xs font-mono text-text-tertiary">— {study.discovery.quoteAuthor}</p>
-              </div>
-
-              <div className="space-y-2 pt-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-tertiary">
-                  Key Qualitative Insights
-                </span>
-                {study.discovery.keyInsights.map((insight, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 p-3 rounded-xl glass border border-border-glass text-sm">
-                    <span className="font-mono text-xs font-bold text-accent shrink-0 mt-0.5">0{idx + 1}.</span>
-                    <span className="text-text-secondary leading-snug">{insight}</span>
+            {/* 3. Dynamic Sections */}
+            {study.sections &&
+              study.sections.map((sec) => (
+                <section key={sec.id} id={sec.id} className="space-y-5">
+                  <div className="flex items-center justify-between border-b border-border-glass pb-3">
+                    <div>
+                      <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
+                        {sec.title}
+                      </h2>
+                      {sec.tagline && (
+                        <p className="text-xs font-mono text-accent mt-0.5 uppercase tracking-wider">
+                          {sec.tagline}
+                        </p>
+                      )}
+                    </div>
+                    <button
+                      onClick={() => copyHeadingLink(sec.id)}
+                      className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
+                      aria-label={`Copy link to ${sec.title}`}
+                    >
+                      {copiedId === sec.id ? (
+                        <Check size={14} className="text-emerald-500" />
+                      ) : (
+                        <Copy size={14} />
+                      )}
+                    </button>
                   </div>
-                ))}
-              </div>
-            </section>
 
-            {/* 5. Goals & Success Metrics */}
-            <section id="goals" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  Goals &amp; Success Definition
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("goals")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                >
-                  {copiedId === "goals" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-              <p className="text-base text-text-primary font-medium">
-                {study.goals.coreGoal}
-              </p>
-              <div className="space-y-2">
-                {study.goals.metrics.map((m, i) => (
-                  <div key={i} className="flex items-center gap-2 text-sm text-text-secondary">
-                    <CheckCircle2 size={15} className="text-emerald-500 shrink-0" />
-                    <span>{m}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="p-3.5 rounded-xl bg-surface border border-border-glass text-xs text-text-tertiary">
-                <span className="font-bold text-text-secondary">Guardrail Metric: </span>
-                {study.goals.guardrailMetric}
-              </div>
-            </section>
+                  {/* Section Content */}
+                  {sec.content && (
+                    <p className="text-base leading-relaxed text-text-secondary">
+                      {sec.content}
+                    </p>
+                  )}
 
-            {/* 6. Prioritization & Deliberately Cut Features */}
-            <section id="prioritization" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  Prioritization Framework
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("prioritization")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                >
-                  {copiedId === "prioritization" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-              <p className="text-sm text-text-secondary">
-                <span className="font-bold text-text-primary">{study.prioritization.framework}: </span>
-                {study.prioritization.frameworkExplanation}
-              </p>
+                  {/* Callout Box */}
+                  {sec.callout && (
+                    <div
+                      className={`p-5 rounded-2xl border ${
+                        sec.callout.type === "hypothesis"
+                          ? "bg-accent-muted/20 border-accent/40 text-text-primary"
+                          : sec.callout.type === "warning"
+                          ? "bg-amber-500/10 border-amber-500/30 text-amber-500"
+                          : sec.callout.type === "quote"
+                          ? "bg-accent-muted/30 border-l-4 border-accent text-text-primary italic"
+                          : "bg-surface border-border-glass text-text-secondary"
+                      }`}
+                    >
+                      {sec.callout.type === "quote" && (
+                        <Quote size={20} className="text-accent mb-2 not-italic" />
+                      )}
+                      {sec.callout.type === "warning" && (
+                        <div className="flex items-center gap-2 font-mono text-xs font-bold uppercase mb-1">
+                          <AlertTriangle size={14} />
+                          <span>Verification Notice</span>
+                        </div>
+                      )}
+                      <p className="text-sm sm:text-base leading-relaxed font-medium">
+                        {sec.callout.text}
+                      </p>
+                      {sec.callout.author && (
+                        <p className="text-xs font-mono text-text-tertiary mt-2 not-italic">
+                          — {sec.callout.author}
+                        </p>
+                      )}
+                    </div>
+                  )}
 
-              {/* Matrix Table */}
-              <div className="overflow-x-auto rounded-2xl glass border border-border-glass">
-                <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-surface/80 border-b border-border-glass text-text-tertiary">
-                    <tr>
-                      <th className="p-3 font-semibold">Feature / Hypothesis</th>
-                      <th className="p-3 font-semibold">Impact</th>
-                      <th className="p-3 font-semibold">Effort</th>
-                      <th className="p-3 font-semibold">Decision</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-border-glass">
-                    {study.prioritization.featuresMatrix.map((row, idx) => (
-                      <tr key={idx} className="hover:bg-surface/30">
-                        <td className="p-3 font-medium text-text-primary">{row.feature}</td>
-                        <td className="p-3">{row.impact}</td>
-                        <td className="p-3">{row.effort}</td>
-                        <td className="p-3">
-                          <span
-                            className={`px-2 py-0.5 rounded text-[10px] font-bold ${
-                              row.verdict.startsWith("P0")
-                                ? "bg-emerald-500/10 text-emerald-500"
-                                : row.verdict.startsWith("P1")
-                                ? "bg-amber-500/10 text-amber-500"
-                                : "bg-red-500/10 text-red-400"
+                  {/* Pipeline Diagram (e.g. parse -> execute -> score) */}
+                  {sec.pipelineDiagram && (
+                    <div className="p-5 rounded-2xl glass-heavy border border-accent/20 space-y-4">
+                      <div className="flex items-center gap-2 font-mono text-xs font-bold text-accent uppercase tracking-wider">
+                        <Terminal size={14} />
+                        <span>Execution Pipeline Flow</span>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+                        {sec.pipelineDiagram.steps.map((st, sIdx) => (
+                          <div
+                            key={sIdx}
+                            className="p-4 rounded-xl bg-surface/80 border border-border-glass relative space-y-1.5"
+                          >
+                            <div className="flex items-center justify-between">
+                              <span className="font-mono text-xs font-bold text-accent">
+                                Step 0{sIdx + 1}
+                              </span>
+                              {sIdx < sec.pipelineDiagram!.steps.length - 1 && (
+                                <span className="hidden md:block font-mono text-accent text-xs">
+                                  →
+                                </span>
+                              )}
+                            </div>
+                            <h4 className="font-mono font-bold text-sm text-text-primary">
+                              {st.name}
+                            </h4>
+                            <p className="text-xs text-text-secondary leading-relaxed">
+                              {st.desc}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Comparison Table (Option A vs Option B) */}
+                  {sec.comparisonTable && (
+                    <div className="overflow-x-auto rounded-2xl glass border border-border-glass shadow-sm">
+                      <table className="w-full text-left text-xs font-mono">
+                        <thead className="bg-surface/90 border-b border-border-glass text-text-tertiary">
+                          <tr>
+                            {sec.comparisonTable.headers.map((h, hIdx) => (
+                              <th key={hIdx} className="p-3.5 font-bold uppercase tracking-wider">
+                                {h}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border-glass">
+                          {sec.comparisonTable.rows.map((row, rIdx) => (
+                            <tr key={rIdx} className="hover:bg-surface/40 transition-colors">
+                              <td className="p-3.5 font-bold text-accent bg-surface/30">
+                                {row.label}
+                              </td>
+                              {row.values.map((v, vIdx) => (
+                                <td key={vIdx} className="p-3.5 text-text-secondary leading-relaxed">
+                                  {v}
+                                </td>
+                              ))}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* Roadmap Steps */}
+                  {sec.roadmapSteps && (
+                    <div className="space-y-3">
+                      {sec.roadmapSteps.map((st) => (
+                        <div
+                          key={st.step}
+                          className="flex items-start gap-4 p-4 rounded-2xl glass border border-border-glass hover:border-accent/30 transition-all"
+                        >
+                          <span className="w-7 h-7 rounded-lg bg-accent/10 border border-accent/30 text-accent font-mono text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                            0{st.step}
+                          </span>
+                          <div className="space-y-1">
+                            <h4 className="font-display font-bold text-sm text-text-primary">
+                              {st.title}
+                            </h4>
+                            <p className="text-xs text-text-secondary leading-relaxed">
+                              {st.description}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Standard Styled Table */}
+                  {sec.table && (
+                    <div className="overflow-x-auto rounded-2xl glass border border-border-glass shadow-sm">
+                      <table className="w-full text-left text-xs font-mono">
+                        <thead className="bg-surface/90 border-b border-border-glass text-text-tertiary">
+                          <tr>
+                            {sec.table.headers.map((h, hIdx) => (
+                              <th key={hIdx} className="p-3.5 font-bold uppercase tracking-wider">
+                                {h}
+                              </th>
+                            ))}
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-border-glass">
+                          {sec.table.rows.map((row, rIdx) => (
+                            <tr key={rIdx} className="hover:bg-surface/40 transition-colors">
+                              {row.map((cell, cIdx) => {
+                                const isVerify = cell.includes("[VERIFY");
+                                return (
+                                  <td
+                                    key={cIdx}
+                                    className={`p-3.5 ${
+                                      cIdx === 0
+                                        ? "font-bold text-text-primary"
+                                        : "text-text-secondary leading-relaxed"
+                                    }`}
+                                  >
+                                    {isVerify ? (
+                                      <span className="inline-block px-2 py-0.5 rounded bg-amber-500/10 text-amber-500 border border-amber-500/30 text-[11px] font-mono">
+                                        {cell}
+                                      </span>
+                                    ) : (
+                                      cell
+                                    )}
+                                  </td>
+                                );
+                              })}
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  )}
+
+                  {/* Subsections Cards */}
+                  {sec.subsections && (
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {sec.subsections.map((sub, sIdx) => (
+                        <div
+                          key={sIdx}
+                          className="p-4 rounded-xl glass border border-border-glass space-y-2"
+                        >
+                          <h4 className="font-display font-bold text-sm text-text-primary flex items-center gap-2">
+                            <span className="w-1.5 h-1.5 rounded-full bg-accent" />
+                            {sub.title}
+                          </h4>
+                          <p className="text-xs text-text-secondary leading-relaxed">
+                            {sub.description}
+                          </p>
+                          {sub.bullets && sub.bullets.length > 0 && (
+                            <div className="pt-1 space-y-1">
+                              {sub.bullets.map((b, bIdx) => {
+                                const isAdd = b.includes("[ADD:") || b.includes("[VERIFY");
+                                return (
+                                  <div
+                                    key={bIdx}
+                                    className={`text-[11px] font-mono px-2 py-1 rounded ${
+                                      isAdd
+                                        ? "bg-amber-500/10 text-amber-500 border border-amber-500/30"
+                                        : "text-text-tertiary"
+                                    }`}
+                                  >
+                                    {b}
+                                  </div>
+                                );
+                              })}
+                            </div>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Section Bullets */}
+                  {sec.bullets && (
+                    <div className="space-y-2">
+                      {sec.bullets.map((b, bIdx) => {
+                        const isVerify = b.includes("[VERIFY") || b.includes("[ADD");
+                        return (
+                          <div
+                            key={bIdx}
+                            className={`flex items-start gap-2.5 p-3 rounded-xl border text-xs ${
+                              isVerify
+                                ? "bg-amber-500/5 border-amber-500/30 text-amber-500 font-mono"
+                                : "glass border-border-glass text-text-secondary"
                             }`}
                           >
-                            {row.verdict}
-                          </span>
-                        </td>
-                      </tr>
+                            <span className="font-mono text-accent font-bold mt-0.5">→</span>
+                            <span className="leading-relaxed">{b}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+
+                  {/* Placeholders Banner */}
+                  {sec.placeholders && sec.placeholders.length > 0 && (
+                    <div className="p-4 rounded-xl bg-amber-500/10 border border-dashed border-amber-500/40 space-y-2">
+                      <div className="flex items-center gap-2 font-mono text-xs font-bold text-amber-500 uppercase">
+                        <AlertTriangle size={14} />
+                        <span>Action Required: Verification Placeholders</span>
+                      </div>
+                      <div className="space-y-1">
+                        {sec.placeholders.map((p, pIdx) => (
+                          <div
+                            key={pIdx}
+                            className="font-mono text-xs text-amber-500/90 pl-5 relative before:content-['•'] before:absolute before:left-1"
+                          >
+                            {p}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </section>
+              ))}
+
+            {/* 4. Standalone Learnings Section (if not in study.sections) */}
+            {!study.sections?.some((s) => s.id === "learnings") &&
+              study.learnings &&
+              study.learnings.length > 0 && (
+                <section id="learnings" className="space-y-4">
+                  <div className="flex items-center justify-between border-b border-border-glass pb-3">
+                    <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
+                      What I Learned
+                    </h2>
+                    <button
+                      onClick={() => copyHeadingLink("learnings")}
+                      className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
+                      aria-label="Copy link to Learnings"
+                    >
+                      {copiedId === "learnings" ? (
+                        <Check size={14} className="text-emerald-500" />
+                      ) : (
+                        <Copy size={14} />
+                      )}
+                    </button>
+                  </div>
+                  <div className="space-y-3">
+                    {study.learnings.map((learning, idx) => (
+                      <div
+                        key={idx}
+                        className="flex items-start gap-3 p-4 rounded-2xl glass border border-border-glass text-sm"
+                      >
+                        <span className="w-5 h-5 rounded-full bg-accent text-text-inverted text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
+                          {idx + 1}
+                        </span>
+                        <p className="text-text-secondary leading-relaxed">{learning}</p>
+                      </div>
                     ))}
-                  </tbody>
-                </table>
-              </div>
-
-              {/* What I deliberately did NOT build */}
-              <div className="space-y-2 pt-3">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-red-400">
-                  What I Deliberately Did NOT Build &amp; Why
-                </span>
-                {study.prioritization.deliberatelyCut.map((cut, idx) => (
-                  <div key={idx} className="p-3 rounded-xl bg-surface/50 border border-border-glass text-xs space-y-1">
-                    <div className="flex items-center gap-1.5 font-bold text-text-primary">
-                      <XCircle size={14} className="text-red-400 shrink-0" />
-                      <span>{cut.feature}</span>
-                    </div>
-                    <p className="text-text-secondary pl-5 leading-snug">{cut.reason}</p>
                   </div>
-                ))}
-              </div>
-            </section>
+                </section>
+              )}
 
-            {/* 7. Solution & Key Flows */}
-            <section id="solution" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  Solution &amp; User Flows
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("solution")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                >
-                  {copiedId === "solution" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-              <p className="text-base text-text-secondary leading-relaxed">
-                {study.solution.overview}
-              </p>
-
-              <div className="space-y-6 pt-2">
-                {study.solution.flows.map((flow, idx) => (
-                  <div key={idx} className="rounded-2xl glass border border-border-glass overflow-hidden shadow-sm">
-                    <img
-                      src={flow.image}
-                      alt={flow.title}
-                      className="w-full h-72 sm:h-96 object-cover"
-                    />
-                    <div className="p-5 space-y-1 bg-surface/80">
-                      <h4 className="font-display font-bold text-base text-text-primary">
-                        {flow.title}
-                      </h4>
-                      <p className="text-xs text-text-secondary leading-relaxed">
-                        {flow.description}
-                      </p>
-                      <span className="text-[10px] font-mono text-text-tertiary block pt-1">
-                        Figure {idx + 1}: {flow.caption}
-                      </span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 8. Execution & PRD Excerpt */}
-            <section id="execution" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  Execution, PRD &amp; Engineering Decisions
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("execution")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                >
-                  {copiedId === "execution" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-
-              {/* PRD excerpt callout */}
-              <div className="rounded-2xl glass border border-border-glass overflow-hidden font-mono text-xs">
-                <div className="px-4 py-2.5 bg-surface/90 border-b border-border-glass flex items-center justify-between">
-                  <span className="text-text-secondary font-bold flex items-center gap-1.5">
-                    <FileText size={13} className="text-accent" />
-                    PRD-SPEC-EXCERPT.md
-                  </span>
-                  <span className="text-[10px] text-text-tertiary">Accepted by Engineering</span>
-                </div>
-                <div className="p-5 leading-relaxed bg-bg/60 text-text-secondary">
-                  {study.execution.prdExcerpt}
-                </div>
-              </div>
-
-              <div className="space-y-2 pt-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-tertiary">
-                  Technical Architecture Decisions
-                </span>
-                {study.execution.engineeringDecisions.map((dec, i) => (
-                  <div key={i} className="flex items-start gap-2 p-3 rounded-xl glass border border-border-glass text-xs">
-                    <span className="font-mono text-accent font-bold">→</span>
-                    <span className="text-text-secondary leading-snug">{dec}</span>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 9. Results & Feedback */}
-            <section id="results" className="space-y-6">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  Results &amp; Measurable Proof
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("results")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                >
-                  {copiedId === "results" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-
-              {/* Before vs After Table */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                {study.results.metrics.map((res, i) => (
-                  <div key={i} className="p-5 rounded-2xl glass-heavy border border-border-glass">
-                    <span className="text-xs font-mono text-text-tertiary block mb-2">{res.metric}</span>
-                    <div className="flex items-baseline gap-2 mb-1">
-                      <span className="font-mono text-sm text-text-tertiary line-through">{res.before}</span>
-                      <span className="font-mono text-3xl font-extrabold text-accent">{res.after}</span>
-                    </div>
-                    <span className="text-xs font-bold text-emerald-500 font-mono">{res.change} improvement</span>
-                  </div>
-                ))}
-              </div>
-
-              <div className="space-y-2">
-                <span className="text-xs font-mono font-bold uppercase tracking-wider text-text-tertiary">
-                  Qualitative Feedback
-                </span>
-                {study.results.feedback.map((fb, idx) => (
-                  <div key={idx} className="p-4 rounded-xl glass border border-border-glass text-sm italic text-text-secondary leading-relaxed">
-                    {fb}
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 10. Learnings */}
-            <section id="learnings" className="space-y-4">
-              <div className="flex items-center justify-between">
-                <h2 className="font-display text-2xl sm:text-3xl font-bold text-text-primary">
-                  What I&apos;d Do Differently (Honest Learnings)
-                </h2>
-                <button
-                  onClick={() => copyHeadingLink("learnings")}
-                  className="p-1.5 rounded-lg glass text-text-tertiary hover:text-text-primary transition-colors"
-                >
-                  {copiedId === "learnings" ? <Check size={14} className="text-emerald-500" /> : <Copy size={14} />}
-                </button>
-              </div>
-              <div className="space-y-3">
-                {study.learnings.map((learning, idx) => (
-                  <div key={idx} className="flex items-start gap-3 p-4 rounded-2xl glass border border-border-glass text-sm">
-                    <span className="w-5 h-5 rounded-full bg-accent text-text-inverted text-xs font-bold flex items-center justify-center shrink-0 mt-0.5">
-                      {idx + 1}
-                    </span>
-                    <p className="text-text-secondary leading-relaxed">{learning}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-
-            {/* 11. Footer: Next Case Study & Back */}
+            {/* 5. Footer: Next Case Study & Back Navigation */}
             <div className="pt-12 border-t border-border-glass flex flex-col sm:flex-row items-center justify-between gap-6">
               <Link
                 href="/#work"

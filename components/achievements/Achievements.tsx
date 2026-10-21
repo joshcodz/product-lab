@@ -16,56 +16,40 @@ export interface Achievement {
 const ACHIEVEMENTS: Achievement[] = [
   {
     id: "1",
-    icon: <Trophy className="text-amber-400" size={24} />,
-    title: "Samsung EnnovateX Finalist",
-    detail: "Top national finalist for developing an AI-driven accessibility tool.",
-    tag: "National Finalist",
-    link: "https://www.samsung.com",
-    glowColor: "group-hover:shadow-amber-500/20",
-  },
-  {
-    id: "2",
     icon: <Users className="text-accent" size={24} />,
-    title: "Founders Club SRMIST Lead",
-    detail: "Leading product & tech initiatives for 150+ student founders and creators.",
-    tag: "Leadership",
+    title: "Founders Club SRMIST (DEI)",
+    detail: "Operations, Marketing, HRM and QC across flagship student events and hackathons.",
+    tag: "Leadership & Ops",
     link: "https://foundersclubsrm.com",
     glowColor: "group-hover:shadow-accent/20",
   },
   {
-    id: "3",
+    id: "2",
     icon: <Rocket className="text-emerald-400" size={24} />,
-    title: "PM Intern @ AlienHouse",
-    detail: "Spearheaded 3 core feature launches, reduced user drop-off across beta.",
+    title: "Ex-PM Intern @ AlienHouse Networks",
+    detail: "Internal product systems for client management, service delivery, and cross-functional workflows.",
     tag: "Product Management",
-    link: "https://alienhouse.io",
+    link: "/work/alienhouse-internship",
     glowColor: "group-hover:shadow-emerald-500/20",
   },
   {
-    id: "4",
+    id: "3",
     icon: <Code2 className="text-sky-400" size={24} />,
-    title: "3+ Shipped 0→1 Side Apps",
-    detail: "Full-stack built & launched Onboarding Friction Score, Zenos, and TaskBot.",
+    title: "Shipped 0→1 Products",
+    detail: "Full-stack built & launched Onboarding Friction Score and Zenos.",
     tag: "Builder",
     glowColor: "group-hover:shadow-sky-500/20",
   },
   {
-    id: "5",
-    icon: <Flame className="text-pink-400" size={24} />,
-    title: "Hackathon Winner & Mentor",
-    detail: "Won 2 regional hackathons, mentored 40+ students in product teardowns.",
-    tag: "Community",
-    glowColor: "group-hover:shadow-pink-500/20",
-  },
-  {
-    id: "6",
+    id: "4",
     icon: <Award className="text-purple-400" size={24} />,
-    title: "Top 5% GitHub Contributions",
-    detail: "Consistent daily builder with 450+ commits across open-source and SaaS tooling.",
+    title: "Active Open-Source Builder",
+    detail: "Consistent contributor shipping full-stack projects on GitHub — Next.js, TypeScript, and more.",
     tag: "Open Source",
     link: "https://github.com/joshcodz",
     glowColor: "group-hover:shadow-purple-500/20",
   },
+
 ];
 
 export default function Achievements() {
@@ -85,7 +69,7 @@ export default function Achievements() {
         </div>
 
         {/* 3D Tilt Badge Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {ACHIEVEMENTS.map((item, index) => (
             <motion.div
               key={item.id}

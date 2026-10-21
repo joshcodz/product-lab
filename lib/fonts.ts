@@ -1,4 +1,4 @@
-import { Inter, JetBrains_Mono, Bricolage_Grotesque } from "next/font/google";
+import { Inter, JetBrains_Mono, Bricolage_Grotesque, Caveat } from "next/font/google";
 
 /**
  * Display font — Bricolage Grotesque
@@ -32,4 +32,15 @@ export const jetbrainsMono = JetBrains_Mono({
   variable: "--font-mono",
   display: "swap",
   fallback: ["Menlo", "monospace"],
+});
+
+/**
+ * Handwriting font — Caveat
+ * Warm, expressive, natural handwriting font for sticky notes.
+ */
+export const caveat = Caveat({
+  subsets: ["latin"],
+  variable: "--font-handwriting",
+  display: "swap",
+  fallback: ["cursive"],
 });

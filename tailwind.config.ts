@@ -13,6 +13,7 @@ const config: Config = {
         display: ["var(--font-display)", "serif"],
         sans: ["var(--font-sans)", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "monospace"],
+        handwriting: ["var(--font-handwriting)", "cursive"],
       },
 
       /* ── Colors (all reference CSS vars for light/dark) ──── */
