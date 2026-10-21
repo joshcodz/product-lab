@@ -70,6 +70,16 @@ export const PLACEHOLDER_FOLDERS: FolderData[] = [
       "Operations, Marketing, HRM and QC across flagship hackathons, Bootcamp campaigns, and institutional outreach initiatives.",
     metric: "SRMIST (DEI) · Operations, Mktg & QC",
   },
+  {
+    id: "5",
+    slug: "product-teardowns",
+    label: "Product Teardowns",
+    iconName: "Search",
+    color: "amber",
+    outcome:
+      "Deep-dives into products I admire — what works, what doesn't, and what I'd change.",
+    metric: "UX & product deconstructions",
+  },
 ];
 
 
@@ -209,7 +219,7 @@ export default function DesktopFolder({ folder, index, onOpen }: DesktopFolderPr
     } else if (clickCount.current === 2) {
       if (clickTimer.current) clearTimeout(clickTimer.current);
       clickCount.current = 0;
-      window.location.href = `/work/${folder.slug}`;
+      window.location.href = folder.slug === "product-teardowns" ? "/teardowns" : `/work/${folder.slug}`;
     }
   }, [folder, onOpen, dismissHint]);
 

@@ -35,5 +35,6 @@ export const TERMINAL_DATA = {
     { slug: "zenos", title: "Zenos (Developer-First Focus OS)" },
     { slug: "alienhouse-internship", title: "AlienHouse Internship (PM Intern)" },
     { slug: "founders-club", title: "Founders Club SRMIST (Student Founder Community)" },
+    { slug: "product-teardowns", title: "Product Teardowns & UX Deconstructions" },
   ],
 };

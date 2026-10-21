@@ -30,6 +30,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CaseStudyPage({ params }: Props) {
+  if (params.slug === "product-teardowns") {
+    redirect("/teardowns");
+  }
+
   // 1. Check local rich case studies
   let study = CASE_STUDIES[params.slug];
 

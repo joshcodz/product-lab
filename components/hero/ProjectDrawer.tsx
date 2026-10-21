@@ -337,10 +337,10 @@ export default function ProjectDrawer({
               Close
             </button>
             <Link
-              href={`/work/${folder.slug}`}
+              href={folder.slug === "product-teardowns" ? "/teardowns" : `/work/${folder.slug}`}
               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-semibold bg-accent text-white shadow-md hover:brightness-105 transition-all group"
             >
-              <span>Open full case study</span>
+              <span>{folder.slug === "product-teardowns" ? "Open teardowns library" : "Open full case study"}</span>
               <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </div>
