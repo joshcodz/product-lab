@@ -1,26 +1,18 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowUpRight, BookOpen, MessageSquare, Newspaper, Sparkles } from "lucide-react";
+import { ArrowUpRight, MessageSquare, Newspaper, Sparkles } from "lucide-react";
 
 interface MarqueeItem {
   id: string;
   source: string;
-  type: "Blog" | "Teardown" | "LinkedIn" | "Feature";
+  type: "Blog" | "LinkedIn" | "Feature";
   headline: string;
   url: string;
   date: string;
 }
 
 const MARQUEE_ITEMS: MarqueeItem[] = [
-  {
-    id: "1",
-    source: "Product Teardowns",
-    type: "Teardown",
-    headline: "Linear vs Jira: Why speed and keyboard-first design won the engineering mindshare",
-    url: "https://linkedin.com/in/joshcodz",
-    date: "Feb 2026",
-  },
   {
     id: "2",
     source: "Founders Club SRMIST",
@@ -101,7 +93,6 @@ export default function RecognitionMarquee() {
               <div>
                 <div className="flex items-center justify-between text-xs font-mono mb-2 text-text-tertiary">
                   <span className="font-semibold text-accent flex items-center gap-1.5">
-                    {item.type === "Teardown" && <BookOpen size={12} />}
                     {item.type === "LinkedIn" && <MessageSquare size={12} />}
                     {item.type === "Blog" && <Newspaper size={12} />}
                     {item.source}

@@ -31,10 +31,9 @@ export const TERMINAL_DATA = {
     github: SITE_CONFIG.githubUrl,
   },
   folders: [
-    { slug: "onboarding-friction-score", title: "Onboarding Friction Score (40% fewer tickets)" },
-    { slug: "zenos", title: "Zenos Collaboration Engine (prototype in 48h)" },
-    { slug: "alienhouse-internship", title: "AlienHouse Internship (3 features shipped)" },
+    { slug: "onboarding-friction-score", title: "Onboarding Friction Score (CLI Sandbox & Analysis)" },
+    { slug: "zenos", title: "Zenos (Developer-First Focus OS)" },
+    { slug: "alienhouse-internship", title: "AlienHouse Internship (PM Intern)" },
     { slug: "founders-club", title: "Founders Club SRMIST (Student Founder Community)" },
-    { slug: "product-teardowns", title: "Product Teardowns & UX Deconstructions" },
   ],
 };

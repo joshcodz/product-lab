@@ -11,13 +11,6 @@ interface Props {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  if (params.slug === "product-teardowns") {
-    return {
-      title: "Product Teardowns Library | Josh's Product Lab",
-      description: "UX deconstructions & architectural teardowns into fast-growing SaaS products.",
-    };
-  }
-
   const study = CASE_STUDIES[params.slug];
   if (study) {
     return {
@@ -37,10 +30,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function CaseStudyPage({ params }: Props) {
-  if (params.slug === "product-teardowns") {
-    redirect("/teardowns");
-  }
-
   // 1. Check local rich case studies
   let study = CASE_STUDIES[params.slug];
 

@@ -70,17 +70,8 @@ export const PLACEHOLDER_FOLDERS: FolderData[] = [
       "Operations, Marketing, HRM and QC across flagship hackathons, Bootcamp campaigns, and institutional outreach initiatives.",
     metric: "SRMIST (DEI) · Operations, Mktg & QC",
   },
-  {
-    id: "5",
-    slug: "product-teardowns",
-    label: "Product Teardowns",
-    iconName: "Search",
-    color: "amber",
-    outcome:
-      "Deep-dives into products I admire — what works, what doesn't, and what I'd change.",
-    metric: "UX & product deconstructions",
-  },
 ];
+
 
 const FOLDER_THEMES: Record<
   FolderColor,
@@ -201,10 +192,6 @@ export default function DesktopFolder({ folder, index, onOpen }: DesktopFolderPr
 
   const handleClick = useCallback(() => {
     dismissHint();
-    if (folder.slug === "product-teardowns") {
-      window.location.href = "/teardowns";
-      return;
-    }
 
     clickCount.current += 1;
 
@@ -230,10 +217,6 @@ export default function DesktopFolder({ folder, index, onOpen }: DesktopFolderPr
     (e: React.TouchEvent) => {
       e.preventDefault();
       dismissHint();
-      if (folder.slug === "product-teardowns") {
-        window.location.href = "/teardowns";
-        return;
-      }
       if (onOpen) {
         onOpen(folder);
       } else {
@@ -283,11 +266,7 @@ export default function DesktopFolder({ folder, index, onOpen }: DesktopFolderPr
           if (e.key === "Enter" || e.key === " ") {
             e.preventDefault();
             dismissHint();
-            if (folder.slug === "product-teardowns") {
-              window.location.href = "/teardowns";
-            } else {
-              setPreviewOpen(true);
-            }
+            setPreviewOpen(true);
           }
         }}
       >
