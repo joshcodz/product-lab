@@ -104,7 +104,7 @@ export async function getApprovedNotes(
 // ─── Insert (public submission) ───────────────────────────────────────────────
 
 /**
- * Insert a new note with status = 'pending'.
+ * Insert a new note with status = 'approved'.
  * Returns the created note (with its id and created_at).
  */
 export async function createNote(
@@ -112,13 +112,15 @@ export async function createNote(
   ipHash: string
 ): Promise<GuestbookNote> {
   const rows = await sql`
-    INSERT INTO guestbook_notes (message, name, color, emoji, ip_hash)
+    INSERT INTO guestbook_notes (message, name, color, emoji, ip_hash, status)
     VALUES (
       ${input.message},
-      ${input.name || "Anonymous"},
+      ${input.name},
       ${input.color},
-      ${input.emoji ?? null}
-    , ${ipHash})
+      ${input.emoji ?? null},
+      ${ipHash},
+      'approved'
+    )
     RETURNING *
   `;
   return rows[0] as GuestbookNote;

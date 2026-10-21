@@ -23,9 +23,9 @@ const NoteSchema = z.object({
     .max(140, "Message must be 140 characters or fewer"),
   name: z
     .string()
-    .max(30, "Name must be 30 characters or fewer")
-    .optional()
-    .default("Anonymous"),
+    .trim()
+    .min(1, "Name or handle is required")
+    .max(30, "Name must be 30 characters or fewer"),
   color: z.enum(ALLOWED_COLORS, {
     message: "Invalid color",
   }),
@@ -167,11 +167,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // 8. Insert with status = 'pending'
+    // 8. Insert with status = 'approved'
     const note = await createNote(
       {
         message: cleanMessage,
-        name: name || "Anonymous",
+        name: name.trim(),
         color,
         emoji: emoji ?? null,
       },

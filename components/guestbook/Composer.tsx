@@ -86,6 +86,12 @@ export default function Composer({ onSuccess, onCancel }: ComposerProps) {
       return;
     }
 
+    const trimmedName = name.trim();
+    if (!trimmedName) {
+      setError("Please enter your name or handle.");
+      return;
+    }
+
     setSubmitting(true);
     setError(null);
 
@@ -95,7 +101,7 @@ export default function Composer({ onSuccess, onCancel }: ComposerProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           message: trimmedMsg,
-          name: name.trim() || "Anonymous",
+          name: trimmedName,
           color,
           emoji,
           website, // honeypot
@@ -129,7 +135,7 @@ export default function Composer({ onSuccess, onCancel }: ComposerProps) {
         </div>
         <h4 className="text-white text-sm font-semibold">Note pinned!</h4>
         <p className="text-white/60 text-xs max-w-sm mx-auto font-mono">
-          Your note was submitted and will appear on the corkboard once reviewed. Thanks for stopping by!
+          Your note was pinned to the corkboard. Thanks for stopping by!
         </p>
       </div>
     );
@@ -214,8 +220,9 @@ export default function Composer({ onSuccess, onCancel }: ComposerProps) {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value.slice(0, 30))}
-                placeholder="Your name / handle"
+                placeholder="Name / handle *"
                 maxLength={30}
+                required
                 className="w-full bg-transparent border-b border-stone-400/50 focus:border-stone-800 text-xs font-mono text-stone-900 placeholder:text-stone-500 focus:outline-none px-1 py-0.5"
               />
             </div>
